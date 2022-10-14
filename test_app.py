@@ -42,3 +42,11 @@ class BoggleAppTestCase(TestCase):
             self.assertEqual(type(data["board"].pop()), list)
             self.assertNotEqual(data["board"], [])
             self.assertNotEqual(data["board"], [[]])
+
+    def test_score_word(self):
+        """Test get word score"""
+
+        with self.client as client:
+            response = client.post('/api/score-word')
+
+            #

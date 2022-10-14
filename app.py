@@ -33,11 +33,21 @@ def new_game():
 
 @app.post('/api/score-word')
 def score_word():
-    print("---------HELLO NEW TEST--------")
-    print("request form is", request.form)
-    print("request type is", type(request.form))
+    # print("---------HELLO NEW TEST--------")
+    # print("request form is", request.form)
+    # print("request type is", type(request.form))
 
-    game_id = request.form.get("game_id")
-    word = request.form.get("word")
+    data = request.get_json()
+    game_id = data.get("game")
+    word = data.get("word")
 
-    return {'game': game_id, 'isThisJSON': "iStHiSjSoN"}
+    game_instance = games[game_id]
+    is_on_board = game_instance.check_word_on_board(word)
+    is_word = game_instance.is_word_in_word_list(word)
+
+    if is_on_board and is_word:
+        return {"result": "ok"}
+    elif not is_word:
+        return {"result": "not-word"}
+    else:
+        return {"result": "not-on-board"}
