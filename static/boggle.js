@@ -26,5 +26,23 @@ function displayBoard(board) {
   // loop over board and create the DOM tr/td structure
 }
 
+// await axios.post("/api/score-word")
+
+const BASE_URL = 'http://localhost:5001'
+const testWord = "ALBUMS"
+const testGameId = 'testtesttesttestestHI'
+
+async function testScoreWord() {
+  const response = await axios({
+    url: `/api/score-word`,
+    method: "POST",
+    data: {
+      'word': testWord,
+      'game_id': testGameId
+    },
+  });
+  return response;
+}
+
 
 start();
