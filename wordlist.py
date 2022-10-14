@@ -28,7 +28,21 @@ class WordList:
         return words
 
     def check_word(self, word):
-        """Is word in word list?"""
+        """Is word in word list?
+
+        Checks if a word is in the word list
+        >>> wl = WordList("dictionary.txt")
+        >>> wl.check_word("ALBUMS")
+        True
+
+        Lookups must be in ALL CAPS!
+        >>> wl.check_word("albums")
+        False
+
+        Apparently this isn't in the dictionary
+        >>> wl.check_word("AARDVARK")
+        False
+        """
 
         return word in self.words
 
