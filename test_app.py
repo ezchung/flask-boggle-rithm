@@ -8,6 +8,8 @@ app.config['TESTING'] = True
 # This is a bit of hack, but don't use Flask DebugToolbar
 app.config['DEBUG_TB_HOSTS'] = ['dont-show-debug-toolbar']
 
+TEST_GAME_ID = 'd34ad458-eaaa-49fc-9dd1-b7e8999bae1f'
+
 
 class BoggleAppTestCase(TestCase):
     """Test flask app of Boggle."""
@@ -45,8 +47,41 @@ class BoggleAppTestCase(TestCase):
 
     def test_score_word(self):
         """Test get word score"""
+        with self.client as client:
+            response = client.post(
+                "/api/score-word",
+                json={
+                    "word": "FED",
+                    "game_id": TEST_GAME_ID
+                }
+                )
+
+            self.assertEqual(response.status_code, 200)
+            response_dict = response.get_json()
+            self.assertEqual(response_dict.get('result'), 'ok')
 
         with self.client as client:
-            response = client.post('/api/score-word')
+            response = client.post(
+                "/api/score-word",
+                json={
+                    "word": "STRING",
+                    "game_id": TEST_GAME_ID
+                }
+                )
 
-            #
+            self.assertEqual(response.status_code, 200)
+            response_dict = response.get_json()
+            self.assertEqual(response_dict.get('result'), 'not-on-board')
+
+        with self.client as client:
+            response = client.post(
+                "/api/score-word",
+                json={
+                    "word": "ASDF",
+                    "game_id": TEST_GAME_ID
+                }
+                )
+
+            self.assertEqual(response.status_code, 200)
+            response_dict = response.get_json()
+            self.assertEqual(response_dict.get('result'), 'not-word')
