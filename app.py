@@ -1,3 +1,4 @@
+from urllib import response
 from flask import Flask, request, render_template, jsonify
 from uuid import uuid4
 
@@ -27,4 +28,16 @@ def new_game():
     games[game_id] = game
     board = game.board
 
-    return {"gameId": game_id, "board": board}
+    return {"gameId": "need-real-id", "board": "need-real-board"}
+
+
+@app.post('/api/score-word')
+def score_word():
+    print("---------HELLO NEW TEST--------")
+    print("request form is", request.form)
+    print("request type is", type(request.form))
+
+    game_id = request.form.get("game_id")
+    word = request.form.get("word")
+
+    return {'game': game_id, 'isThisJSON': "iStHiSjSoN"}
