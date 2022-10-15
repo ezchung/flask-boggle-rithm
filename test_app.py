@@ -5,13 +5,13 @@ from app import app, games
 from boggle import BoggleGame
 
 
-TEST_GAME = BoggleGame() #this is not a global const
+TEST_GAME = BoggleGame()  # this is not a global const
 TEST_GAME.board = [
-    ['K','B','O','F','E'],
-    ['S','I','E','K','D'],
-    ['A','H','O','B','G'],
-    ['E','A','S','S','L'],
-    ['E','W','L','L','K']
+    ['K', 'B', 'O', 'F', 'E'],
+    ['S', 'I', 'E', 'K', 'D'],
+    ['A', 'H', 'O', 'B', 'G'],
+    ['E', 'A', 'S', 'S', 'L'],
+    ['E', 'W', 'L', 'L', 'K']
 ]
 
 games['d34ad458-eaaa-49fc-9dd1-b7e8999bae1f'] = TEST_GAME
@@ -54,7 +54,7 @@ class BoggleAppTestCase(TestCase):
 
             # write a test for this route
             self.assertEqual(type(data["gameId"]), str)
-            self.assertEqual(type(data["board"]), list) #this is failing
+            self.assertEqual(type(data["board"]), list)  # this is failing
             self.assertEqual(type(data["board"].pop()), list)
             self.assertNotEqual(data["board"], [])
             self.assertNotEqual(data["board"], [[]])
@@ -69,11 +69,12 @@ class BoggleAppTestCase(TestCase):
                     "word": "FED",
                     "game_id": TEST_GAME_ID
                 }
-                )
+            )
 
             self.assertEqual(response.status_code, 200)
             response_dict = response.get_json()
-            self.assertEqual(response_dict.get('result'), 'ok') #square bracket. more strict!
+            # square bracket. more strict!
+            self.assertEqual(response_dict.get('result'), 'ok')
 
         with self.client as client:
             response = client.post(
@@ -82,7 +83,7 @@ class BoggleAppTestCase(TestCase):
                     "word": "STRING",
                     "game_id": TEST_GAME_ID
                 }
-                )
+            )
 
             self.assertEqual(response.status_code, 200)
             response_dict = response.get_json()
@@ -95,7 +96,7 @@ class BoggleAppTestCase(TestCase):
                     "word": "ASDF",
                     "game_id": TEST_GAME_ID
                 }
-                )
+            )
             response_dict = response.get_json()
 
             self.assertEqual(response.status_code, 200)
